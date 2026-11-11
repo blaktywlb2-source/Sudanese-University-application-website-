@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>التقديم للجامعة | التقديم الإلكتروني</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--gold:#d8ad58;--light:#f2d28b;--bg:#0f0f0f;--card:#1b1b1b;--border:#333}
+body{font-family:'Cairo',sans-serif;background:var(--bg);color:#fff;min-height:100vh}
+header{background:#111;border-bottom:1px solid #2a2a2a;position:sticky;top:0;z-index:10}
+.nav{width:min(1100px,92%);margin:auto;min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.logo{font-size:24px;font-weight:900;color:var(--light)}
+.logo span{color:var(--gold);font-size:13px;display:block;letter-spacing:1px}
+.badge{background:linear-gradient(135deg,#f2d28b,#bd8832);color:#17120a;padding:8px 14px;border-radius:20px;font-weight:800;font-size:13px}
+.hero{width:min(1100px,92%);margin:auto;padding:38px 0 20px;text-align:center}
+.hero h1{font-size:clamp(28px,5vw,44px);line-height:1.4}
+.hero h1 span{color:var(--gold)}
+.hero p{color:#aaa;margin-top:10px;line-height:1.9}
+.card{width:min(760px,92%);margin:20px auto 40px;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:26px;box-shadow:0 10px 40px #0008}
+.card h2{font-size:20px;margin-bottom:5px;color:var(--light)}
+.card>p{color:#999;font-size:13px;margin-bottom:20px}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.full{grid-column:1/-1}
+label{display:block;font-size:13px;font-weight:700;margin-bottom:6px;color:#ddd}
+input,select{width:100%;background:#121212;border:1px solid #3a3a3a;color:#fff;border-radius:10px;padding:13px 12px;outline:none;font-family:inherit;font-size:14px}
+input:focus,select:focus{border-color:var(--gold)}
+input::placeholder{color:#777}
+.radio-box{display:flex;gap:10px}
+.radio{flex:1;background:#121212;border:1px solid #3a3a3a;border-radius:10px;padding:12px;text-align:center;cursor:pointer;font-weight:800;font-size:14px}
+.radio input{display:none}
+.radio.active{background:linear-gradient(135deg,#f2d28b,#bd8832);color:#17120a;border-color:var(--gold)}
+.hint{font-size:11px;color:#888;margin-top:4px}
+.pay-box{background:#241c0d;border:1px solid #70552d;border-radius:12px;padding:14px}
+.pay-box label{color:var(--light)}
+.pay-box input{border-color:#70552d;background:#151008}
+.choice{background:#121212;border:1px solid #333;border-radius:14px;padding:14px;margin-bottom:10px;position:relative}
+.choice-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.choice-head b{color:var(--light);font-size:14px}
+.remove-btn{background:#421f1f;color:#ffaaaa;border:1px solid #7c3434;border-radius:8px;padding:5px 10px;cursor:pointer;font-family:inherit;font-weight:700;font-size:12px}
+.add-btn{width:100%;background:#1e2e1e;border:1px dashed #4caf50;color:#7CFC9A;padding:12px;border-radius:10px;cursor:pointer;font-family:inherit;font-weight:800}
+.add-btn:disabled{opacity:.4;cursor:not-allowed}
+.counter{text-align:center;color:#aaa;font-size:13px;margin:6px 0}
+.counter b{color:var(--light)}
+.submit{grid-column:1/-1;background:linear-gradient(135deg,#f2d28b,#bd8832);color:#17120a;border:0;padding:15px;border-radius:12px;font-weight:900;font-size:17px;cursor:pointer;margin-top:6px}
+.submit:hover{opacity:.92}
+.error{grid-column:1/-1;display:none;background:#421f1f;color:#ffaaaa;border:1px solid #7c3434;padding:12px;border-radius:10px;font-size:14px;text-align:center;line-height:1.7;font-weight:700}
+footer{text-align:center;color:#777;padding:0 0 30px;font-size:12px}
+.modal{position:fixed;inset:0;background:#000c;display:none;align-items:center;justify-content:center;padding:15px;z-index:50}
+.modal.show{display:flex}
+.box{width:min(560px,100%);background:#1b1b1b;border:1px solid #70552d;border-radius:18px;padding:24px;max-height:90vh;overflow:auto}
+.box h3{color:var(--light);margin-bottom:14px}
+.box table{width:100%;border-collapse:collapse;font-size:14px}
+.box td{padding:9px 6px;border-bottom:1px solid #2d2d2d}
+.box td:first-child{color:#aaa;width:40%}
+.btns{display:flex;gap:10px;margin-top:18px}
+.btns button{flex:1;padding:12px;border-radius:10px;border:0;font-weight:800;cursor:pointer;font-family:inherit}
+.ok{background:linear-gradient(135deg,#f2d28b,#bd8832);color:#17120a}
+.no{background:#2a2a2a;color:#fff}
+.success{display:none;text-align:center;padding:20px}
+.success .big{font-size:50px}
+.success h3{color:var(--light);margin:10px 0}
+.success p{color:#aaa;line-height:1.8;font-size:14px}
+@media(max-width:600px){.form{grid-template-columns:1fr}.card{padding:18px}.nav{flex-wrap:wrap;padding:10px 0}}
+</style>
+</head>
+<body>
+
+<header><div class="nav">
+<div class="logo">التقديم للجامعة<span>UNIVERSITY ADMISSION - SUDAN</span></div>
+<div class="badge">التقديم الإلكتروني 2026</div>
+</div></header>
+
+<div class="hero">
+<h1>قدم لجامعتك <span>من مكانك</span></h1>
+<p>اختر من <b style="color:#f2d28b">5 إلى 10 رغبات</b> - ممكن تكرر الجامعة بتخصص مختلف، لكن ما ممكن تكرر نفس الجامعة ونفس التخصص.</p>
+</div>
+
+<div class="card">
+<h2>📝 استمارة التقديم</h2>
+<p>جميع الحقول مطلوبة *</p>
+<form id="form" class="form" novalidate>
+
+<div class="full">
+<label>الاسم رباعي *</label>
+<input id="name" placeholder="مثال: محمد أحمد علي حسن" required>
+<div class="hint">اكتب الاسم كما في الشهادة السودانية / الرقم الوطني</div>
+</div>
+
+<div>
+<label>الرقم الوطني *</label>
+<input id="nationalId" inputmode="numeric" placeholder="مثال: 12345678901" required>
+</div>
+
+<div>
+<label>النسبة المئوية *</label>
+<input id="percentage" type="number" min="50" max="100" step="0.01" placeholder="مثال: 82.5" required>
+</div>
+
+<div class="full">
+<label>نوع الدراسة *</label>
+<div class="radio-box">
+<label class="radio active"><input type="radio" name="degree" value="بكالوريوس" checked> 🎓 بكالوريوس</label>
+<label class="radio"><input type="radio" name="degree" value="دبلوم"> 📜 دبلوم</label>
+</div>
+</div>
+
+<div>
+<label>عام الشهادة *</label>
+<select id="year" required><option value="">اختر العام</option></select>
+</div>
+
+<div>
+<label>رقم هاتف نشط *</label>
+<input id="phone" type="tel" placeholder="09xxxxxxxx" required>
+<div class="hint">سيتم التواصل معك عبر هذا الرقم وواتساب</div>
+</div>
+
+<div class="full">
+<h3 style="color:var(--light);font-size:16px;margin:8px 0 4px">🎯 رغبات التقديم ( 5 - 10 )</h3>
+<p style="color:#999;font-size:12px;margin-bottom:10px">رتب رغباتك حسب الأهمية - الرغبة 1 هي الأهم</p>
+<div id="choices"></div>
+<div class="counter">عدد الرغبات: <b id="countLabel">0</b> / 10</div>
+<button type="button" class="add-btn" id="addBtn" onclick="addChoice()">+ إضافة رغبة جديدة</button>
+</div>
+
+<div class="full pay-box">
+<label>🔐 رمز التقديم بعد الدفع *</label>
+<input id="payCode" inputmode="numeric" placeholder="ادخل رمز التقديم المرسل لك بعد الدفع" required>
+<div class="hint">⚠️ يتم الحصول على الرمز بعد سداد رسوم التقديم. بدون رمز صحيح لا يمكن إكمال التقديم.</div>
+</div>
+
+<div id="error" class="error"></div>
+<button type="submit" class="submit">إرسال طلب التقديم ←</button>
+</form>
+
+<div id="success" class="success">
+<div class="big">✅</div>
+<h3>تم استلام طلبك بنجاح!</h3>
+<p>شكراً لك، تم تسجيل <b id="successCount"></b> رغبات. سيتم التواصل معك قريباً.<br>رقم الطلب: <b id="orderNo" style="color:#f2d28b"></b></p>
+<button class="submit" onclick="location.reload()">تقديم طلب جديد</button>
+</div>
+</div>
+
+<footer>© 2026 التقديم للجامعة - جميع الحقوق محفوظة</footer>
+
+<div class="modal" id="modal">
+<div class="box">
+<h3>راجع بياناتك قبل الإرسال</h3>
+<table id="preview"></table>
+<div class="btns">
+<button class="no" onclick="closeModal()">تعديل</button>
+<button class="ok" onclick="confirmSend()">تأكيد وإرسال</button>
+</div>
+</div>
+</div>
+
+<script>
+const CORRECT_CODE = "232318";
+const UNIVERSITIES = ["السودان المفتوحة","جامعة المشرق","جامعة أفريقيا العلمية","جامعة النيلين","جامعة الرباط","جامعة بخت الرضا","جامعة بحري","الجامعة الوطنية","جامعة التقانة","جامعة الجزيرة","جامعة بورتسودان","الكليات الخاصة","جامعة الرازي","جامعة ابن سينا"];
+const MAJORS_MED = ["طب بشري","طب وجراحة الأسنان","صيدلة","المختبرات الطبية","التمريض","العلاج الطبيعي","الأشعة التشخيصية","التخدير","البصريات","الصحة العامة","التغذية العلاجية","علم النفس الصحي","القبالة"];
+const MAJORS_COMP = ["علوم الحاسوب","هندسة البرمجيات","تقنية المعلومات","نظم المعلومات","الذكاء الاصطناعي","الأمن السيبراني","الشبكات","علوم البيانات","هندسة الحاسوب","تطوير الويب والتطبيقات","الوسائط المتعددة"];
+
+const yearSel = document.getElementById('year');
+for(let y=2026; y>=1980; y--){ let o=document.createElement('option'); o.value=y; o.textContent=y; yearSel.appendChild(o); }
+
+document.querySelectorAll('.radio').forEach(el=>{
+  el.addEventListener('click',()=>{
+    document.querySelectorAll('.radio').forEach(r=>r.classList.remove('active'));
+    el.classList.add('active'); el.querySelector('input').checked=true;
+  });
+});
+
+function majorOptions(){
+  let h='<option value="">اختر التخصص</option>';
+  h+='<optgroup label="🩺 التخصصات الطبية">'+MAJORS_MED.map(m=>`<option>${m}</option>`).join('')+'</optgroup>';
+  h+='<optgroup label="💻 التخصصات الحاسوبية">'+MAJORS_COMP.map(m=>`<option>${m}</option>`).join('')+'</optgroup>';
+  return h;
+}
+function uniOptions(){
+  return '<option value="">اختر الجامعة</option>'+UNIVERSITIES.map((u,i)=>`<option>${i+1} - ${u}</option>`).join('');
+}
+
+let choiceCount=0;
+function renderLabels(){
+  document.querySelectorAll('.choice').forEach((el,i)=>{
+    el.querySelector('.choice-title').textContent = `الرغبة ${i+1}`;
+    el.querySelector('.remove-btn').style.display = document.querySelectorAll('.choice').length > 5 ? 'block' : 'none';
+  });
+  document.getElementById('countLabel').textContent = document.querySelectorAll('.choice').length;
+  document.getElementById('addBtn').disabled = document.querySelectorAll('.choice').length >= 10;
+  document.getElementById('addBtn').textContent = document.querySelectorAll('.choice').length >= 10 ? 'وصلت الحد الأقصى (10 رغبات)' : '+ إضافة رغبة جديدة';
+}
+
+function addChoice(){
+  if(document.querySelectorAll('.choice').length >= 10) return;
+  choiceCount++;
+  const div=document.createElement('div');
+  div.className='choice';
+  div.innerHTML=`
+    <div class="choice-head"><b class="choice-title">الرغبة ${choiceCount}</b><button type="button" class="remove-btn" onclick="this.closest('.choice').remove();renderLabels()">حذف ✕</button></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div><label>الجامعة *</label><select class="uni">${uniOptions()}</select></div>
+      <div><label>التخصص *</label><select class="major">${majorOptions()}</select></div>
+    </div>`;
+  document.getElementById('choices').appendChild(div);
+  renderLabels();
+}
+// ابدأ بـ 5 رغبات إجبارية
+for(let i=0;i<5;i++) addChoice();
+
+let data={};
+const form=document.getElementById('form');
+form.addEventListener('submit',e=>{
+  e.preventDefault();
+  const name=document.getElementById('name').value.trim();
+  const nid=document.getElementById('nationalId').value.trim();
+  const perc=document.getElementById('percentage').value.trim();
+  const degree=document.querySelector('input[name="degree"]:checked').value;
+  const year=document.getElementById('year').value;
+  const phone=document.getElementById('phone').value.trim();
+  const payCode=document.getElementById('payCode').value.trim();
+  const err=document.getElementById('error');
+  function showErr(msg){err.style.display='block';err.textContent=msg;err.scrollIntoView({behavior:'smooth',block:'center'});return;}
+
+  if(name.split(/\s+/).length < 4) return showErr('⚠️ اكتب الاسم رباعي كامل - 4 أسماء');
+  if(!/^\d{10,12}$/.test(nid)) return showErr('⚠️ الرقم الوطني لازم يكون 10 إلى 12 رقم');
+  if(!perc || perc<50 || perc>100) return showErr('⚠️ النسبة لازم تكون بين 50 و 100');
+  if(!year) return showErr('⚠️ اختر عام الشهادة');
+  if(!/^0?9\d{8}$/.test(phone.replace(/\s/g,''))) return showErr('⚠️ اكتب رقم هاتف سوداني صحيح يبدأ بـ 09');
+
+  // جمع الرغبات
+  const choices=[];
+  const els=document.querySelectorAll('.choice');
+  for(let i=0;i<els.length;i++){
+    const uni=els[i].querySelector('.uni').value;
+    const major=els[i].querySelector('.major').value;
+    if(!uni) return showErr(`⚠️ اختر الجامعة في الرغبة ${i+1}`);
+    if(!major) return showErr(`⚠️ اختر التخصص في الرغبة ${i+1}`);
+    choices.push({uni,major});
+  }
+  if(choices.length < 5) return showErr('⚠️ لازم تختار أقل شي 5 رغبات');
+  if(choices.length > 10) return showErr('⚠️ أقصى عدد للرغبات هو 10');
+
+  // منع تكرار نفس الجامعة + نفس التخصص
+  const seen=new Set();
+  for(let i=0;i<choices.length;i++){
+    const key=choices[i].uni+'||'+choices[i].major;
+    if(seen.has(key)){
+      return showErr(`❌ تكرار غير مسموح: اخترت "${choices[i].uni} - ${choices[i].major}" مرتين في الرغبة ${i+1}\nممكن تكرر الجامعة لكن بتخصص مختلف`);
+    }
+    seen.add(key);
+  }
+
+  if(!payCode) return showErr('⚠️ ادخل رمز التقديم بعد الدفع');
+  if(payCode !== CORRECT_CODE) return showErr('❌ خطأ لا يمكن التقديم\nيرجى سداد الرسوم أولاً للحصول على رمز التقديم الصحيح');
+
+  err.style.display='none';
+  data={name,nid,perc,degree,year,phone,choices,payCode};
+  let preview=`
+  <tr><td>الاسم رباعي</td><td><b>${name}</b></td></tr>
+  <tr><td>الرقم الوطني</td><td><b>${nid}</b></td></tr>
+  <tr><td>النسبة</td><td><b>${perc}%</b></td></tr>
+  <tr><td>نوع الدراسة</td><td><b>${degree}</b></td></tr>
+  <tr><td>عام الشهادة</td><td><b>${year}</b></td></tr>
+  <tr><td>رقم الهاتف</td><td><b dir="ltr">${phone}</b></td></tr>`;
+  choices.forEach((c,i)=>{ preview+=`<tr><td>الرغبة ${i+1}</td><td><b>${c.uni}<br><span style="color:#f2d28b">${c.major}</span></b></td></tr>`; });
+  preview+=`<tr><td>رمز التقديم</td><td><b style="color:#7CFC9A">✓ تم التحقق</b></td></tr>`;
+  document.getElementById('preview').innerHTML=preview;
+  document.getElementById('modal').classList.add('show');
+});
+
+function closeModal(){document.getElementById('modal').classList.remove('show');}
+function confirmSend(){
+  closeModal();
+  form.style.display='none';
+  document.getElementById('success').style.display='block';
+  document.getElementById('successCount').textContent = data.choices.length + ' رغبات';
+  document.getElementById('orderNo').textContent='UNI-'+Math.floor(100000+Math.random()*900000);
+  window.scrollTo({top:0,behavior:'smooth'});
+  console.log('طلب جديد:',data);
+}
+</script>
+</body>
+</html>
